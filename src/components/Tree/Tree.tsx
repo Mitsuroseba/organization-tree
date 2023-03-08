@@ -1,8 +1,8 @@
 import React, {useState} from "react";
 import {useAppSelector} from "../../app/hooks";
-import TreeNode from "../TreeNode/TreeNode";
+import TreeNode from "./TreeNode";
 import {selectEmployees} from "../../slices/organizationTreeSlice";
-
+import './Tree.scss';
 
 const Tree: React.FC = () => {
     const employees = useAppSelector(selectEmployees);
@@ -47,7 +47,9 @@ const Tree: React.FC = () => {
         ));
     };
 
-    return <div>{renderTree(employees)}</div>;
+    return <div>
+        <ul className="tree">{renderTree(employees)}</ul>
+        </div>;
 };
 
 export default Tree;

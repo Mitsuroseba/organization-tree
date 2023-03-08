@@ -11,16 +11,16 @@ const TreeNode: React.FC<TreeNodeProps> = ({
     const isExpanded = expandedNodes.includes(employee.id);
     const dispatch = useAppDispatch();
     return (
-        <div>
+        <li>
             <div onClick={() => onExpand(employee.id)} onDoubleClick={() => onExpandDeep(employee)}>
                 {hasChildren && (
                     <span>{isExpanded ? '▼' : '►'}</span>
                 )}
-                <span>{employee.title}</span>
+                {employee.title}
             </div>
 
             {isExpanded && hasChildren && (
-                <div>
+                <ul>
                     {employee.children !== undefined &&  employee.children.map((child: Employee) => (
                         <TreeNode
                             key={child.id}
@@ -30,14 +30,14 @@ const TreeNode: React.FC<TreeNodeProps> = ({
                             expandedNodes={expandedNodes}
                         />
                     ))}
-                </div>
+                </ul>
             )}
             {isExpanded && (
                 <div onClick={() => console.log('add popup')}>
                     <span>+</span>
                 </div>
             )}
-        </div>
+        </li>
     );
 };
 
