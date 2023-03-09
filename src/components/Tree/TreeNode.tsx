@@ -6,6 +6,7 @@ const TreeNode: React.FC<TreeNodeProps> = ({
                                                onExpand,
                                                onExpandDeep,
                                                expandedNodes,
+                                               handleAddClick,
                                            }) => {
     const hasChildren = employee.children && employee.children.length > 0;
     const isExpanded = expandedNodes.includes(employee.id);
@@ -20,7 +21,7 @@ const TreeNode: React.FC<TreeNodeProps> = ({
                 {employee.title}
             </div>
             {isExpanded && (
-                <div onClick={() => console.log('add popup')}>
+                <div onClick={() => handleAddClick(employee.id)}>
                     <span>+</span>
                 </div>
             )}
@@ -33,6 +34,7 @@ const TreeNode: React.FC<TreeNodeProps> = ({
                             onExpand={onExpand}
                             onExpandDeep={onExpandDeep}
                             expandedNodes={expandedNodes}
+                            handleAddClick={handleAddClick}
                         />
                     ))}
                 </ul>

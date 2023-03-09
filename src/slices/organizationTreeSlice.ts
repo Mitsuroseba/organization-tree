@@ -10,7 +10,6 @@ enum AppStatus {
 }
 
 const initialState: OrganizationTreeState = {
-    value: 0,
     status: AppStatus.IDLE,
     employees: [],
 };
@@ -23,13 +22,28 @@ export const fetchOrganizationTree = createAsyncThunk(
         return response.data;
     }
 );
+const addEmployeeDeep = (employee: Employee,  employees: Employee[], parentId?: number,): Employee[] => {
+    const newEmployees = employees.map((e) => {
+        if (parentId === undefined) {
+            e.children = e.children ? [...e.children, employee] : [employee];
+        }
+        else if (e.id === parentId) {
+            e.children = e.children ? [...e.children, employee] : [employee];
+        }
+        else if (e.children) {
+            e.children = addEmployeeDeep(employee, e.children, parentId);
+        }
+        return e;
+    });
+    return newEmployees;
+}
 
 export const organizationTreeSlice = createSlice({
     name: 'organizationTree',
     initialState,
     reducers: {
-        addNode: (state, action: PayloadAction<number>) => {
-            state.value += action.payload;
+        addEmployee: (state, action: PayloadAction<AddEmployeePayload>) => {
+            state.employees = addEmployeeDeep(action.payload.employee, state.employees, action.payload.parentId,);
         },
     },
     // The `extraReducers` field lets the slice handle actions defined elsewhere,
@@ -49,7 +63,7 @@ export const organizationTreeSlice = createSlice({
     },
 });
 
-export const { addNode } = organizationTreeSlice.actions;
+export const { addEmployee } = organizationTreeSlice.actions;
 export const selectEmployees = (state: RootState) => state.organizationTree.employees;
 
 // We can also write thunks by hand, which may contain both sync and async logic.

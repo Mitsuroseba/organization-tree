@@ -1,19 +1,21 @@
 import React, {useState} from "react";
-import {useAppSelector} from "../../app/hooks";
+import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import TreeNode from "./TreeNode";
-import {selectEmployees} from "../../slices/organizationTreeSlice";
+import {addEmployee, selectEmployees} from "../../slices/organizationTreeSlice";
 import './Tree.scss';
+import AddEmployeePopup from "../AddEmployeePopup/AddEmployeePopup";
 
 const Tree: React.FC = () => {
     const employees = useAppSelector(selectEmployees);
-
+    const dispatch = useAppDispatch();
     const [expandedNodes, setExpandedNodes] = useState<number[]>([]);
+    const [showPopup, setShowPopup] = useState(false);
+    const [selectedParentId, setSelectedParentId] = useState<number | undefined>(undefined);
 
-
-    // const dispatch = useAppDispatch();
-    // const [incrementAmount, setIncrementAmount] = useState('2');
-    //
-    // const incrementValue = Number(incrementAmount) || 0;
+    const handleAddClick = (parentId: number) => {
+        setSelectedParentId(parentId);
+        setShowPopup(true);
+    };
 
     const handleNodeExpand = (nodeId: number) => {
         setExpandedNodes((prevExpandedNodes) => {
@@ -43,13 +45,22 @@ const Tree: React.FC = () => {
                 onExpand={handleNodeExpand}
                 onExpandDeep={handleNodeExpandDeep}
                 expandedNodes={expandedNodes}
+                handleAddClick={handleAddClick}
             />
         ));
     };
 
     return <div>
         <ul className="tree">{renderTree(employees)}</ul>
-        </div>;
+        {showPopup && (
+            <AddEmployeePopup
+                onClose={() => setShowPopup(false)}
+                onAdd={(employee: Employee) => {
+                    dispatch(addEmployee({ employee: employee, parentId: selectedParentId }));
+                }}
+            />
+        )}
+    </div>;
 };
 
 export default Tree;
