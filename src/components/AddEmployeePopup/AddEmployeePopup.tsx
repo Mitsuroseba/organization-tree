@@ -1,67 +1,67 @@
-import React, { useState } from 'react';
-import { useAppDispatch } from '../../app/hooks';
-import {addEmployee} from "../../slices/organizationTreeSlice";
-import './AddEmployeePopup.scss';
+import React, { useState } from 'react'
+import { useAppDispatch } from '../../app/hooks'
+import { addEmployee } from '../../slices/organizationTreeSlice'
+import './AddEmployeePopup.scss'
 
 const AddEmployeePopup: React.FC<AddEmployeePopupProps> = ({ onAdd, onClose }) => {
-    const dispatch = useAppDispatch();
-    const [formData, setFormData] = useState<AddEmployeeForm>({
-        name: '',
-        title: '',
-        department: '',
-        phone: '',
-        email: ''
-    });
-    const [errors, setErrors] = useState<Partial<AddEmployeeForm>>({});
+  const dispatch = useAppDispatch()
+  const [formData, setFormData] = useState<AddEmployeeForm>({
+    name: '',
+    title: '',
+    department: '',
+    phone: '',
+    email: ''
+  })
+  const [errors, setErrors] = useState<Partial<AddEmployeeForm>>({})
 
-    const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        if (validateForm()) {
-            const newEmployee: Employee = {
-                id: Math.floor(Math.random() * 1000),
-                name: formData.name,
-                title: formData.title,
-                department: formData.department,
-                phone: formData.phone,
-                email: formData.email,
-                children: []
-            };
-            onAdd(newEmployee);
-            onClose();
-        }
-    };
+  const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    if (validateForm()) {
+      const newEmployee: Employee = {
+        id: Math.floor(Math.random() * 1000),
+        name: formData.name,
+        title: formData.title,
+        department: formData.department,
+        phone: formData.phone,
+        email: formData.email,
+        children: []
+      }
+      onAdd(newEmployee)
+      onClose()
+    }
+  }
 
-    const validateForm = (): boolean => {
-        let valid = true;
-        const newErrors: Partial<AddEmployeeForm> = {};
-        if (!formData.name) {
-            newErrors.name = 'Name is required';
-            valid = false;
-        }
-        if (!formData.title) {
-            newErrors.title = 'Title is required';
-            valid = false;
-        }
-        if (!formData.email) {
-            newErrors.email = 'Email is required';
-            valid = false;
-        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-            newErrors.email = 'Invalid email address';
-            valid = false;
-        }
-        if (formData.phone && !/^\d{10}$/.test(formData.phone)) {
-            newErrors.phone = 'Invalid phone number';
-            valid = false;
-        }
-        setErrors(newErrors);
-        return valid;
-    };
+  const validateForm = (): boolean => {
+    let valid = true
+    const newErrors: Partial<AddEmployeeForm> = {}
+    if (!formData.name) {
+      newErrors.name = 'Name is required'
+      valid = false
+    }
+    if (!formData.title) {
+      newErrors.title = 'Title is required'
+      valid = false
+    }
+    if (!formData.email) {
+      newErrors.email = 'Email is required'
+      valid = false
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = 'Invalid email address'
+      valid = false
+    }
+    if (formData.phone && !/^\d{10}$/.test(formData.phone)) {
+      newErrors.phone = 'Invalid phone number'
+      valid = false
+    }
+    setErrors(newErrors)
+    return valid
+  }
 
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        setFormData({ ...formData, [event.target.name]: event.target.value });
-    };
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    setFormData({ ...formData, [event.target.name]: event.target.value })
+  }
 
-    return (
+  return (
         <div className="overlay">
             <div className="popup">
                 <h2>Add Employee</h2>
@@ -97,8 +97,7 @@ const AddEmployeePopup: React.FC<AddEmployeePopupProps> = ({ onAdd, onClose }) =
                 </form>
             </div>
         </div>
-    );
-};
+  )
+}
 
-export default AddEmployeePopup;
-
+export default AddEmployeePopup
