@@ -7,7 +7,7 @@ export const store = configureStore({
   }
 })
 
-store.dispatch(fetchOrganizationTree())
+void store.dispatch(fetchOrganizationTree())
 
 export type AppDispatch = typeof store.dispatch
 export type RootState = ReturnType<typeof store.getState>

@@ -49,7 +49,7 @@ const apiData = [
 ]
 
 // TODO: Add API calls here.
-export async function fetchOrganization () {
+export async function fetchOrganization (): Promise<{ data: Employee[] }> {
   return await new Promise<{ data: Employee[] }>((resolve) =>
     setTimeout(() => { resolve({ data: apiData }) }, 700)
   )

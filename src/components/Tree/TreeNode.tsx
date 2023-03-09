@@ -1,5 +1,4 @@
-import React, { useState } from 'react'
-import { useAppDispatch } from '../../app/hooks'
+import React from 'react'
 
 const TreeNode: React.FC<TreeNodeProps> = ({
   employee,
@@ -8,10 +7,9 @@ const TreeNode: React.FC<TreeNodeProps> = ({
   expandedNodes,
   handleAddClick
 }) => {
-  const hasChildren = employee.children && employee.children.length > 0
+  const hasChildren = (Boolean(employee.children)) && employee.children.length > 0
   const isExpanded = expandedNodes.includes(employee.id)
 
-  const dispatch = useAppDispatch()
   return (
         <li>
             <div onClick={() => { onExpand(employee.id) }} onDoubleClick={() => { onExpandDeep(employee) }}>
@@ -27,7 +25,7 @@ const TreeNode: React.FC<TreeNodeProps> = ({
             )}
             {isExpanded && hasChildren && (
                 <ul>
-                    {employee.children !== undefined && employee.children.map((child: Employee) => (
+                    {employee.children?.map((child: Employee) => (
                         <TreeNode
                             key={child.id}
                             employee={child}

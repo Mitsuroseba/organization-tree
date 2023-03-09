@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, type PayloadAction } from '@reduxjs/toolkit'
 import { fetchOrganization } from '../app/api'
-import { AppThunk, type RootState } from '../app/store'
+import { type RootState } from '../app/store'
 // import { RootState, AppThunk } from '../../app/store';
 // import { fetchCount } from './counterAPI';
 enum AppStatus {
@@ -62,17 +62,6 @@ export const organizationTreeSlice = createSlice({
 })
 
 export const { addEmployee } = organizationTreeSlice.actions
-export const selectEmployees = (state: RootState) => state.organizationTree.employees
-
-// We can also write thunks by hand, which may contain both sync and async logic.
-// Here's an example of conditionally dispatching actions based on current state.
-// export const incrementIfOdd =
-//     (amount: number): AppThunk =>
-//         (dispatch, getState) => {
-//             const currentValue = selectCount(getState());
-//             if (currentValue % 2 === 1) {
-//                 dispatch(incrementByAmount(amount));
-//             }
-//         };
+export const selectEmployees = (state: RootState): Employee[] => state.organizationTree.employees
 
 export default organizationTreeSlice.reducer

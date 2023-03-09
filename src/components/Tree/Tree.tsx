@@ -12,12 +12,12 @@ const Tree: React.FC = () => {
   const [showPopup, setShowPopup] = useState(false)
   const [selectedParentId, setSelectedParentId] = useState<number | undefined>(undefined)
 
-  const handleAddClick = (parentId: number) => {
+  const handleAddClick = (parentId: number): void => {
     setSelectedParentId(parentId)
     setShowPopup(true)
   }
 
-  const handleNodeExpand = (nodeId: number) => {
+  const handleNodeExpand = (nodeId: number): void => {
     setExpandedNodes((prevExpandedNodes) => {
       if (prevExpandedNodes.includes(nodeId)) {
         return prevExpandedNodes.filter((id) => id !== nodeId)
@@ -28,7 +28,7 @@ const Tree: React.FC = () => {
   }
 
   // TODO Make recursive
-  const handleNodeExpandDeep = (employee: Employee) => {
+  const handleNodeExpandDeep = (employee: Employee): void => {
     if (employee.children != null) {
       const childrenIds = employee.children.map((child) => child.id)
       setExpandedNodes((prevExpandedNodes) => {
@@ -37,7 +37,7 @@ const Tree: React.FC = () => {
     }
   }
 
-  const renderTree = (employees: Employee[]) => {
+  const renderTree = (employees: Employee[]): JSX.Element[] => {
     return employees.map((employee) => (
             <TreeNode
                 key={employee.id}
