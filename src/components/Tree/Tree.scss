@@ -52,6 +52,10 @@ $width-presudo: 0px;
     padding: $card-margin-top 0 0 $card-ident;
     position:relative;
     z-index: -1;
+
+    &  div {
+      pointer-events: auto;
+    }
     &:before {
       border-top:1px solid;
       content:"";

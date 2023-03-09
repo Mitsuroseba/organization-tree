@@ -30,7 +30,17 @@ const apiData = [
                         department: 'Engineering',
                         phone: '555-555-5555',
                         email: 'op@veo.com',
-                        children: [],
+                        children: [
+                            {
+                                id: 4,
+                                name: 'Ole Peterson',
+                                title: 'Product LEAD',
+                                department: 'Engineering',
+                                phone: '555-555-5555',
+                                email: 'op@veo.com',
+                                children: [],
+                            }
+                        ],
                     }
                 ],
             },
